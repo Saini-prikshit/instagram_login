@@ -3,7 +3,6 @@ import 'package:instagram_login/src/modal/user_data_model.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import '../api handler/api_handler.dart';
 
-
 /// screen for instagram login
 class InstaLoginView extends StatefulWidget {
   final Function(UserDataModel) userData;
@@ -14,7 +13,6 @@ class InstaLoginView extends StatefulWidget {
 }
 
 class _InstaLoginViewState extends State<InstaLoginView> {
-
   /// For showing instagram login page in web
   late WebViewController _webViewController;
 
@@ -25,9 +23,9 @@ class _InstaLoginViewState extends State<InstaLoginView> {
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
       ..setNavigationDelegate(
         NavigationDelegate(
-          onUrlChange: (change) async{
+          onUrlChange: (change) async {
             var url = change.url;
-            if(url!.startsWith('${InstaApi.config.reDirectURL}?code=')){
+            if (url!.startsWith('${InstaApi.config.reDirectURL}?code=')) {
               _getData(url);
             }
           },
@@ -38,39 +36,43 @@ class _InstaLoginViewState extends State<InstaLoginView> {
 
   /// To fetch user data
   var _loading = false;
-  Future<void> _getData(String url) async{
+  Future<void> _getData(String url) async {
     setState(() {
       _loading = true;
     });
     Uri uri = Uri.parse(url);
     var code = uri.queryParameters['code'];
-    await InstaApi.getAccessToken(code: code.toString()).then((token) async{
-      if(token != null){
-        await InstaApi.getUserData(accessToken: token).then((data) {
-          if(data != null){
-            widget.userData(data);
-            Navigator.of(context).pop();
-          }else{
-            Navigator.of(context).pop();
-          }
-        },);
-      }else{
-        Navigator.of(context).pop();
-      }
-    },);
+    await InstaApi.getAccessToken(code: code.toString()).then(
+      (token) async {
+        if (token != null) {
+          await InstaApi.getUserData(accessToken: token).then(
+            (data) {
+              if (data != null) {
+                widget.userData(data);
+                Navigator.of(context).pop();
+              } else {
+                Navigator.of(context).pop();
+              }
+            },
+          );
+        } else {
+          Navigator.of(context).pop();
+        }
+      },
+    );
     setState(() {
       _loading = false;
     });
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Instagram login',style: TextStyle(
-          fontWeight: FontWeight.w500
-        ),),
+        title: const Text(
+          'Instagram login',
+          style: TextStyle(fontWeight: FontWeight.w500),
+        ),
         automaticallyImplyLeading: false,
         centerTitle: true,
       ),
@@ -78,16 +80,21 @@ class _InstaLoginViewState extends State<InstaLoginView> {
         alignment: Alignment.center,
         children: [
           WebViewWidget(controller: _webViewController),
-          _loading ? const Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              CircularProgressIndicator(),
-              SizedBox(
-                height: 10,
-              ),
-              Text('Please wait...',style: TextStyle(color: Colors.black),)
-            ],
-          ) : const SizedBox()
+          _loading
+              ? const Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    CircularProgressIndicator(),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      'Please wait...',
+                      style: TextStyle(color: Colors.black),
+                    )
+                  ],
+                )
+              : const SizedBox()
         ],
       ),
     );

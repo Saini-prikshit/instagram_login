@@ -9,38 +9,36 @@ class UserDataModel {
   final int? followsCount;
   final int? mediaCount;
 
-  UserDataModel({
-    this.userId,
-    this.username,
-    this.name,
-    this.accountType,
-    this.profilePictureUrl,
-    this.followersCount,
-    this.followsCount,
-    this.mediaCount,
-    this.id
-  });
+  UserDataModel(
+      {this.userId,
+      this.username,
+      this.name,
+      this.accountType,
+      this.profilePictureUrl,
+      this.followersCount,
+      this.followsCount,
+      this.mediaCount,
+      this.id});
 
   factory UserDataModel.fromJson(Map<String, dynamic> json) => UserDataModel(
-    userId: json["user_id"],
-    username: json["username"],
-    name: json["name"],
-    accountType: json["account_type"],
-    profilePictureUrl: json["profile_picture_url"],
-    followersCount: json["followers_count"],
-    followsCount: json["follows_count"],
-    mediaCount: json["media_count"],
-    id: json['id']
-  );
+      userId: json["user_id"],
+      username: json["username"],
+      name: json["name"],
+      accountType: json["account_type"],
+      profilePictureUrl: json["profile_picture_url"],
+      followersCount: json["followers_count"],
+      followsCount: json["follows_count"],
+      mediaCount: json["media_count"],
+      id: json['id']);
 
   Map<String, dynamic> toJson() => {
-    "user_id": userId,
-    "username": username,
-    "name": name,
-    "account_type": accountType,
-    "profile_picture_url": profilePictureUrl,
-    "followers_count": followersCount,
-    "follows_count": followsCount,
-    "media_count": mediaCount,
-  };
+        "user_id": userId,
+        "username": username,
+        "name": name,
+        "account_type": accountType,
+        "profile_picture_url": profilePictureUrl,
+        "followers_count": followersCount,
+        "follows_count": followsCount,
+        "media_count": mediaCount,
+      };
 }

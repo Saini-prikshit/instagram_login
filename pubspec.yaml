@@ -1,5 +1,5 @@
 name: instagram_login
-description: "A new Flutter project."
+description: "A Flutter package for easy Instagram login using OAuth authentication. Fetch user data seamlessly with just a few lines of code."
 version: 1.0.0
 homepage: https://github.com/Saini-prikshit/instagram_login.git
 repository: https://github.com/Saini-prikshit/instagram_login.git
